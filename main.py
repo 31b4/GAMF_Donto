@@ -80,17 +80,58 @@ def Task6(d,p):
                 maxH = l.eHour
                 maxS = l.eSec
                 lDay = l
-    print('6. feladat:')
-    print(f'A {p} rendszámú autó a(z) {lDay.day}. napon {lDay.eHour}:{lDay.eSec}-órakor érkezett be legkésöbb.\n')
-    
+    print('\n6. feladat:')
+    if maxH is not -1:
+        print(f'A {p} rendszámú autó a(z) {lDay.day}. napon {lDay.eHour}:{lDay.eSec}-órakor érkezett be legkésöbb.\n')
+    else:
+        print('Nincs ilyen rendszámú autó az adatbázisban.\n')
+def EstimatedTime(h1,s1,h2,s2):
+    time = []#[hour,min]
+    if h1 == h2:
+        time = [0,s2-s1]
+    elif h1< h2:
+        if s2<s1:
+            time = [0,60-s1+s2]
+        else:
+            time = [h2-h1,s2-s1]
+    return time
+def AddTime(h1,s1,h2,s2):
+    time =[h1+h2,0]
+    if s1+s2 > 60:
+        time[0] +=1
+        time[1] = (s1+s2)-60
+    else:
+        time[1] = s1+s2
+    return time
+def Task7(d):
+    cars = []
+    for car in d:
+        if not car.nPlate in cars:
+            cars.append(car.nPlate)
+    print('7. feladat:')
+    for car in cars:
+        days = {}
+        for x in range(1,d[-1].day+1):
+            days[x] = [0,0]
+        for l in d:
+            if l.nPlate == car:
+                t = EstimatedTime(l.sHour,l.sSec, l.eHour,l.eSec)
+                days[l.day] = AddTime(t[0],t[1],days[l.day][0],days[l.day][1])
+        print(car)
+        for x in days:
+            if not (days[x][0]==0 and days[x][1]==0):
+                print(f'{x}. nap: {days[x][0]} ora {days[x][1]} perc')
+        print('')
 def Main():
     dataList = ReadAll()
     Task2(dataList)
     Task3(dataList)
     days = Task4(dataList)
+    print('5. feladat:')
     print('Kérem egy autó rendszámát: ', end='')
     nPlateInput = input().upper()
     Task5(nPlateInput,days)
     Task6(dataList,nPlateInput)
+    Task7(dataList)
 if __name__ == "__main__":
     Main()
