@@ -81,7 +81,7 @@ def Task6(d,p):
                 maxS = l.eSec
                 lDay = l
     print('\n6. feladat:')
-    if maxH is not -1:
+    if maxH != -1:
         print(f'A {p} rendszámú autó a(z) {lDay.day}. napon {lDay.eHour}:{lDay.eSec}-órakor érkezett be legkésöbb.\n')
     else:
         print('Nincs ilyen rendszámú autó az adatbázisban.\n')
