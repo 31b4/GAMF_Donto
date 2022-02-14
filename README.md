@@ -1,2 +1,2 @@
 # GAMF_Donto
-jo volt.
+jo volt. kaptunk finom husimusit. marci irigy
